@@ -1,21 +1,37 @@
 package com.allan.helpdesk.domain;
 
 import com.allan.helpdesk.domain.enums.Perfil;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class Pessoa {
+@Entity
+public abstract class Pessoa implements Serializable {
+    private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
+
+    @Column(unique = true) //tabela unica no banco
     protected String cpf;
+
+    @Column(unique = true) //tabela unica no banco
     protected String email;
     protected String senha;
+
+    @ElementCollection(fetch = FetchType.EAGER)  //vai asegurar que quando der um get volte a lista de perfil
+    @CollectionTable(name = "PERFIS") //vai criar uma tabela no banco só para perfis
     protected Set<Integer> perfis = new HashSet<>();
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCriacao = LocalDate.now();
 
     public Pessoa(){
