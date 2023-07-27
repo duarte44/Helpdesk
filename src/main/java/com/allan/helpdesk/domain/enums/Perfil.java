@@ -1,12 +1,12 @@
-package com.allan.helpdesk.domain;
+package com.allan.helpdesk.domain.enums;
 
-public enum Status {
-    ABERTO(0, "ABERTO"), ANDAMENTO(1, "ANDAMENTO"), ENCERRADO(2, "ENCERRADO");
+public enum Perfil {
+    ADMIN(0, "ROLE_ADMIN"), CLIENTE(1, "ROLE_CLIENTE"), TECNICO(2, "ROLE_TECNICO");
 
     private Integer codigo;
     private String descricao;
 
-    Status(Integer codigo, String descricao) {
+    Perfil(Integer codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
@@ -19,15 +19,15 @@ public enum Status {
         return descricao;
     }
 
-    public static Status toEnum(Integer cod){
+    public static Perfil toEnum(Integer cod){
         if(cod == null){
             return null;
         }
-        for(Status x : Status.values()){
+        for(Perfil x : Perfil.values()){
             if(cod.equals(x.getCodigo())){
                 return x;
             }
         }
-        throw new IllegalArgumentException("Status Invalido");
+        throw new IllegalArgumentException("Perfil Invalido");
     }
 }
