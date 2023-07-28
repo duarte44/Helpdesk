@@ -1,4 +1,4 @@
-package com.allan.helpdesk.domain.repositories;
+package com.allan.helpdesk.repositories;
 
 import com.allan.helpdesk.domain.Pessoa;
 import com.allan.helpdesk.domain.Tecnico;

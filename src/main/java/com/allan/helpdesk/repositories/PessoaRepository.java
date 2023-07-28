@@ -1,4 +1,4 @@
-package com.allan.helpdesk.domain.repositories;
+package com.allan.helpdesk.repositories;
 
 import com.allan.helpdesk.domain.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
