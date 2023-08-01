@@ -24,4 +24,12 @@ public class TecnicoService {
     public List<Tecnico> findAll() {
         return repository.findAll();
     }
+
+    public Tecnico create(TecnicoDTO objDTO) {
+        objDTO.setId(null);
+        Tecnico newObj = new Tecnico(objDTO);
+        return repository.save(newObj);
+
+
+    }
 }
