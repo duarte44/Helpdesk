@@ -8,9 +8,12 @@ import com.allan.helpdesk.domain.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class ChamadoDTO {
+public class ChamadoDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
 
     private Integer id;
@@ -18,11 +21,17 @@ public class ChamadoDTO {
     private LocalDate dataAbertura = LocalDate.now();
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamaneto;
-    private Prioridade prioridade;
-    private Status status;
+    @NotNull(message = "O campo Prioridade é requerido")
+    private Integer prioridade;
+    @NotNull(message = "O campo Status é requerido")
+    private Integer status;
+    @NotNull(message = "O campo Titulo é requerido")
     private String titulo;
+    @NotNull(message = "O campo Observações é requerido")
     private String observacoes;
+    @NotNull(message = "O campo Tecnico é requerido")
     private Integer tecnico;
+    @NotNull(message = "O campo Cliente é requerido")
     private Integer cliente;
     private String nomeTecnico;
     private String nomeCliente;
@@ -31,14 +40,17 @@ public class ChamadoDTO {
         this.id = obj.getId();
         this.dataAbertura = obj.getDataAbertura();
         this.dataFechamaneto = obj.getDataFechamaneto();
-        this.prioridade = obj.getPrioridade();
-        this.status = obj.getStatus();
+        this.prioridade = obj.getPrioridade().getCodigo();
+        this.status = obj.getStatus().getCodigo();
         this.titulo = obj.getTitulo();
         this.observacoes = obj.getObservacoes();
         this.tecnico = obj.getTecnico().getId();
         this.cliente = obj.getCliente().getId();
         this.nomeTecnico = obj.getTecnico().getNome();
         this.nomeCliente = obj.getCliente().getNome();
+    }
+
+    public ChamadoDTO() {
     }
 
     public Integer getId() {
@@ -65,19 +77,19 @@ public class ChamadoDTO {
         this.dataFechamaneto = dataFechamaneto;
     }
 
-    public Prioridade getPrioridade() {
+    public Integer getPrioridade() {
         return prioridade;
     }
 
-    public void setPrioridade(Prioridade prioridade) {
+    public void setPrioridade(Integer prioridade) {
         this.prioridade = prioridade;
     }
 
-    public Status getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
