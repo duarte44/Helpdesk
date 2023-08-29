@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,14 @@ public class ChamadoService {
         return repository.save(newChamado(objDto));
     }
 
+    public Chamado update(Integer id, ChamadoDTO objDto) {
+        objDto.setId(id);
+        Chamado oldObj = findByid(id);
+        oldObj = newChamado(objDto);
+        return repository.save(oldObj);
+
+    }
+
     private Chamado newChamado(ChamadoDTO obj){
         Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
         Cliente cliente = clienteService.findById(obj.getCliente());
@@ -48,6 +57,10 @@ public class ChamadoService {
         Chamado chamado = new Chamado();
         if(obj.getId() != null){
             chamado.setId(obj.getId());
+        }
+
+        if(obj.getStatus().equals(2)){
+            chamado.setDataFechamaneto(LocalDate.now());
         }
 
         chamado.setTecnico(tecnico);
@@ -59,5 +72,6 @@ public class ChamadoService {
         return chamado;
 
     }
+
 
 }
